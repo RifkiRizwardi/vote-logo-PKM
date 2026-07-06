@@ -1,0 +1,77 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 28px;
+    color: #1a1a1a;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.filosofi {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.filosofi img {
+    width: 100px;
+    height: auto;
+}
+
+.deskripsi h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #007C77;
+}
+
+.deskripsi h4 {
+    margin-top: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.deskripsi p {
+    margin-top: 8px;
+    line-height: 1.5;
+    font-size: 14.5px;
+}
+.launching{
+    background-color: #007C77;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    list-style: none;
+}
+.launching:hover {
+    background-color: #005f5f;
+}
+.launching a {
+    color: white;
+    text-decoration: none;
+}

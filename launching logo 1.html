@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launching Logo PKM</title>
+    <style>
+        /* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+.launch-container {
+    text-align: center;
+    animation: popUp 1.2s ease-out;
+}
+
+.logo {
+    width: 200px;
+    opacity: 0;
+    transform: scale(0.7);
+    animation: fadeZoom 1.5s ease-out forwards;
+}
+
+h1 {
+    font-size: 32px;
+    color: #00796b;
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 1.2s;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 1.6s;
+}
+
+/* Animations */
+@keyframes fadeZoom {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="launch-container">
+        <img src="images/tina.jpg" alt="Logo PKM Informatika 2025" class="logo">
+        <h1 class="fade-in">Resmi menjadi Logo PKM 2025</h1>
+        <p class="fade-in delay">Peduli, Tumbuh, Teknologi</p>
+    </div>
+</body>
+</html>

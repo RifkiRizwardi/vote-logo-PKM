@@ -1,0 +1,130 @@
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    background-color: #ffffff;
+    top: 0;
+overflow: hidden;
+}
+.scroll-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.scroll-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.result::after {
+    content: '↓';
+    display: inline-block;
+    margin-left: 5px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+.back::after {
+    content: '↑';
+    display: inline-block;
+    margin-left: 5px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+.logo-inti {
+    top: 0px;
+    transition: transform 0.3s ease;
+}
+
+.voting {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    background: rgb(255, 255, 255);
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+
+.logo button {
+    margin: 10px 5px;
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.vote {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.decline {
+    background-color: #f44336;
+    color: white;
+}
+
+.logo.voted {
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(0,255,0,0.3);
+}
+.result {
+    background-color: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.chart-container {
+    background: white;
+    margin: 30rem auto auto auto
+    ;
+    width: 100%;
+    max-width: 700px;
+    padding: 30px;
+    border-radius: 10px;
+}
+.back{
+    background-color: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.launch{
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}

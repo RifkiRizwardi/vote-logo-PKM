@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Logo PKM 2026 - Ultra Tech</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* ========================================================
+            Desain Tema Teknologi Modern
+            ======================================================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #060b19, #0f172a, #1e1b4b, #090d16);
+            background-size: 400% 400%;
+            animation: gradientBg 15s ease infinite;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .logo-inti {
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.6));
+            max-width: 100%;
+        }
+
+        h1 {
+            color: #00f2fe; 
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            font-size: 32px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .voting-container {
+            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
+            margin-bottom: 40px; width: 100%; max-width: 1000px; min-height: 400px;
+        }
+
+        .logo-card {
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 242, 254, 0.15); border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); padding: 30px;
+            text-align: center; width: 290px; transition: all 0.4s ease;
+        }
+
+        .logo-card:hover {
+            transform: translateY(-8px); border-color: rgba(0, 242, 254, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.25);
+        }
+
+        .logo-card img {
+            border-radius: 12px; object-fit: cover; margin-bottom: 15px;
+            max-width: 100%; border: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-card h3 { margin: 10px 0 5px 0; color: #e2e8f0; font-size: 18px; }
+        .logo-card p { font-size: 14px; color: #94a3b8; margin-bottom: 25px; min-height: 42px; line-height: 1.5; }
+
+        button {
+            font-family: inherit; font-weight: 600; font-size: 13px;
+            padding: 12px 20px; border: none; border-radius: 10px; cursor: pointer;
+            transition: all 0.3s ease; margin: 5px; text-transform: uppercase;
+        }
+
+        .vote-btn {
+            background: linear-gradient(135deg, #00f2fe, #4facfe); color: #0f172a;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3); width: 80%;
+        }
+        .vote-btn:hover { box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6); transform: scale(1.03); }
+
+        .status-message {
+            display: none; color: #00ffcc; font-weight: bold; margin: 15px 0; font-size: 15px;
+        }
+
+        .reset-btn {
+            display: none; background: transparent; color: #ff4757; border: 1px solid #ff4757; padding: 8px 15px;
+        }
+        .reset-btn:hover { background: rgba(255, 71, 87, 0.1); }
+
+        .admin-trigger-btn {
+            background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; margin-top: 20px;
+        }
+        .admin-trigger-btn:hover { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; }
+
+        .chart-container {
+            display: none; margin-top: 40px; background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(99, 102, 241, 0.4); padding: 30px; border-radius: 20px; width: 100%; max-width: 650px;
+        }
+        .chart-container h2 { color: #a855f7; margin-bottom: 20px; }
+
+        .hide-card { display: none !important; }
+
+        .fullscreen-winner-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #0f172a 0%, #02040a 100%);
+            z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 20px;
+        }
+
+        .winner-title-anim {
+            font-size: 40px; color: #fbbf24; text-shadow: 0 0 25px rgba(251, 191, 36, 0.6);
+            margin-bottom: 30px; opacity: 0; animation: fadeInDown 1s ease forwards 0.3s;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .winner-logos-wrap { display: flex; gap: 40px; justify-content: center; align-items: center; }
+
+        .winning-logo-img {
+            width: 250px; height: 250px; object-fit: cover; border-radius: 25px;
+            border: 4px solid #fbbf24; box-shadow: 0 0 60px rgba(251, 191, 36, 0.8);
+            opacity: 0; transform: scale(0);
+            animation: zoomInBounce 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.8s;
+        }
+        
+        .winning-logo-img.seri { width: 180px; height: 180px; }
+
+        .winner-name-text {
+            margin-top: 30px; font-size: 35px; color: #00f2fe; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+            opacity: 0; animation: fadeInUp 1s ease forwards 1.8s;
+        }
+
+        .filosofi-frame {
+            margin-top: 25px; padding: 25px 35px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 242, 254, 0.4);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 242, 254, 0.1);
+            max-width: 600px;
+            opacity: 0; animation: fadeInUp 1s ease forwards 2.5s;
+        }
+
+        .filosofi-frame h4 {
+            color: #fbbf24; margin-bottom: 15px; font-size: 16px; 
+            text-transform: uppercase; letter-spacing: 2px; opacity: 0.8;
+        }
+
+        .filosofi-frame p {
+            font-size: 20px; font-weight: 500; color: #e2e8f0; line-height: 1.6;
+            font-style: italic; margin-bottom: 0;
+        }
+
+        .close-winner-btn {
+            margin-top: 40px; background: transparent; color: #ff4757; border: 2px solid #ff4757;
+            padding: 12px 30px; border-radius: 12px; font-size: 14px; opacity: 0;
+            animation: fadeInUp 1s ease forwards 3.2s; transition: 0.3s;
+        }
+        
+        .close-winner-btn:hover { background: #ff4757; color: white; box-shadow: 0 0 20px rgba(255, 71, 87, 0.5); }
+
+        @keyframes zoomInBounce {
+            0% { transform: scale(0) translateY(50px); opacity: 0; }
+            60% { transform: scale(1.1) translateY(-15px); opacity: 1; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="images/LOGO INTI.png" alt="logo inti" height="100" id="logo-utama" class="logo-inti">
+    <h1>Vote Logo PKM 2026</h1>
+    
+    <div class="voting-container" id="votingContainer">
+        <div class="logo-card" id="Logo1">
+            <a href="logo 1.html"><img src="images/emoy.jpg" alt="Logo 1" height="150"></a>
+            <h3>Filosofi:</h3><p id="desc-Logo1">klik logo untuk lihat filosofinya</p>
+            <button class="vote-btn" onclick="eksekusiVote('Logo1')">Vote</button>
+            <div class="status-message">✓ Tersimpan!</div>
+            <button class="reset-btn" onclick="hapusPilihan('Logo1')">Hapus Pilihan ini</button>
+        </div>
+        
+        <div class="logo-card" id="Logo2">
+            <a href="logo 2.html"><img src="images/gajah.jpeg" alt="Logo 2" height="150"></a>
+            <h3>Filosofi:</h3><p id="desc-Logo2">klik logo untuk lihat filosofinya</p>
+            <button class="vote-btn" onclick="eksekusiVote('Logo2')">Vote</button>
+            <div class="status-message">✓ Tersimpan!</div>
+            <button class="reset-btn" onclick="hapusPilihan('Logo2')">Hapus Pilihan ini</button>
+        </div>
+        
+        <div class="logo-card" id="Logo3">
+            <a href="logo 3.html"><img src="images/Logo 2n.png" alt="Logo 3" height="150"></a>
+            <h3>Filosofi:</h3><p id="desc-Logo3">klik logo untuk lihat filosofinya</p>
+            <button class="vote-btn" onclick="eksekusiVote('Logo3')">Vote</button>
+            <div class="status-message">✓ Tersimpan!</div>
+            <button class="reset-btn" onclick="hapusPilihan('Logo3')">Hapus Pilihan ini</button>
+        </div>
+    </div>
+
+    <button class="admin-trigger-btn" id="adminBtn" onclick="aksesAdmin()">📊 Lihat Hasil Voting (Admin Only)</button>
+    
+    <div class="chart-container" id="chartContainer">
+        <h2>Hasil Voting Real-Time</h2>
+        <canvas id="voteChart" width="600" height="400"></canvas>
+        <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <button class="admin-trigger-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706); color:white; margin-top:0; border:none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);" onclick="tampilkanPemenangCinematic()">🏆 Tampilkan Pemenang</button>
+            <button class="admin-trigger-btn" style="background:#ff4757; color:white; margin-top:0; border:none;" onclick="kunciAdmin()">Tutup Grafik</button>
+        </div>
+    </div>
+
+    <div id="cinematicWinnerScreen" class="fullscreen-winner-overlay hide-card"></div>
+
+    <script>
+        // --- KONFIGURASI TEKS FILOSOFI (UBAH MANUAL DI SINI) ---
+        const teksFilosofi = {
+            'Logo1': 'Teks filosofi untuk Logo 1 diletakkan di sini.',
+            'Logo2': 'Teks filosofi untuk Logo 2 diletakkan di sini.',
+            'Logo3': 'Untuk mencapai ini dengan cara yang paling efisien, saya telah memindahkan teks filosofi ke dalam konstanta terpisah di bagian paling atas script. Sekarang, Anda cukup mengubah isi variabel tersebut di satu tempat, dan sistem akan langsung mengambil data tersebut untuk ditampilkan.'
+        };
+
+        let objekGrafik = null; 
+
+        const databaseLogo = {
+            'Logo1': { nama: 'Logo 1', img: 'images/emoy.jpg' },
+            'Logo2': { nama: 'Logo 2', img: 'images/gajah.jpeg' },
+            'Logo3': { nama: 'Logo 3', img: 'images/Logo 2n.png' }
+        };
+
+        if (!localStorage.getItem('skor_Logo1')) localStorage.setItem('skor_Logo1', '0');
+        if (!localStorage.getItem('skor_Logo2')) localStorage.setItem('skor_Logo2', '0');
+        if (!localStorage.getItem('skor_Logo3')) localStorage.setItem('skor_Logo3', '0');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const statusSudahVote = localStorage.getItem('pilihanUser');
+            if (statusSudahVote && document.getElementById(statusSudahVote)) {
+                kondisiTelahVoting(statusSudahVote);
+            }
+        });
+
+        function eksekusiVote(idLogo) {
+            localStorage.setItem('pilihanUser', idLogo);
+            localStorage.setItem('skor_' + idLogo, parseInt(localStorage.getItem('skor_' + idLogo)) + 1);
+            kondisiTelahVoting(idLogo);
+            perbaruiDataGrafik();
+        }
+
+        function kondisiTelahVoting(idLogoTerpilih) {
+            document.querySelectorAll('.logo-card').forEach(kartu => {
+                if (kartu.id === idLogoTerpilih) {
+                    kartu.classList.remove('hide-card');
+                    kartu.querySelector('.vote-btn').style.display = 'none';
+                    kartu.querySelector('.status-message').style.display = 'block';
+                    kartu.querySelector('.reset-btn').style.display = 'inline-block';
+                } else kartu.classList.add('hide-card');
+            });
+        }
+
+        function hapusPilihan(idLogo) {
+            let skor = parseInt(localStorage.getItem('skor_' + idLogo));
+            if (skor > 0) localStorage.setItem('skor_' + idLogo, skor - 1);
+            localStorage.removeItem('pilihanUser');
+            
+            document.querySelectorAll('.logo-card').forEach(kartu => {
+                kartu.classList.remove('hide-card');
+                kartu.querySelector('.vote-btn').style.display = 'inline-block';
+                kartu.querySelector('.status-message').style.display = 'none';
+                kartu.querySelector('.reset-btn').style.display = 'none';
+            });
+            perbaruiDataGrafik();
+        }
+
+        function aksesAdmin() {
+            if (prompt("Masukkan Kata Sandi Panel Admin:") === "admin123") {
+                document.getElementById('chartContainer').style.display = 'block';
+                document.getElementById('adminBtn').style.display = 'none';
+                tampilkanGrafikKeCanvas();
+                document.getElementById('chartContainer').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function kunciAdmin() {
+            document.getElementById('chartContainer').style.display = 'none';
+            document.getElementById('adminBtn').style.display = 'inline-block';
+        }
+
+        function tampilkanPemenangCinematic() {
+            const v1 = parseInt(localStorage.getItem('skor_Logo1')) || 0;
+            const v2 = parseInt(localStorage.getItem('skor_Logo2')) || 0;
+            const v3 = parseInt(localStorage.getItem('skor_Logo3')) || 0;
+
+            const maxSkor = Math.max(v1, v2, v3);
+            const layar = document.getElementById('cinematicWinnerScreen');
+            
+            layar.innerHTML = '';
+            document.body.style.overflow = 'hidden'; 
+
+            if (maxSkor === 0) {
+                layar.innerHTML = `<h2 class="winner-title-anim" style="color:#ff4757; text-shadow:none;">Belum Ada Suara Masuk!</h2>
+                                   <button class="close-winner-btn" onclick="tutupLayarPemenang()">Kembali</button>`;
+            } else {
+                let pemenangIds = [];
+                if (v1 === maxSkor) pemenangIds.push('Logo1');
+                if (v2 === maxSkor) pemenangIds.push('Logo2');
+                if (v3 === maxSkor) pemenangIds.push('Logo3');
+
+                let html = '';
+                html += `<h2 class="winner-title-anim">${pemenangIds.length === 1 ? 'PEMENANG LOGO PKM 2026' : 'HASIL SERI!'}</h2>`;
+                
+                html += `<div class="winner-logos-wrap">`;
+                pemenangIds.forEach((id, index) => {
+                    let p = databaseLogo[id];
+                    let delayAnimasi = 0.8 + (index * 0.3); 
+                    let kelasUkuran = pemenangIds.length > 1 ? 'seri' : '';
+                    html += `<img src="${p.img}" class="winning-logo-img ${kelasUkuran}" style="animation-delay: ${delayAnimasi}s;">`;
+                });
+                html += `</div>`;
+
+                let namaLogoTeks = pemenangIds.map(id => databaseLogo[id].nama).join(' & ');
+                html += `<div class="winner-name-text">${namaLogoTeks}</div>`;
+                
+                let filosofiHtml = pemenangIds.map(id => `
+                    <div style="${pemenangIds.length > 1 ? 'margin-bottom: 15px;' : ''}">
+                        ${pemenangIds.length > 1 ? `<span style="color:#00f2fe; font-size:14px;">${databaseLogo[id].nama}</span><br>` : ''}
+                        "${teksFilosofi[id]}"
+                    </div>
+                `).join('');
+
+                html += `<div class="filosofi-frame">
+                            <h4>Filosofi Logo</h4>
+                            <p>${filosofiHtml}</p>
+                         </div>`;
+                
+                html += `<button class="close-winner-btn" onclick="tutupLayarPemenang()">Tutup Pengumuman</button>`;
+                
+                layar.innerHTML = html;
+            }
+
+            layar.classList.remove('hide-card');
+        }
+
+        function tutupLayarPemenang() {
+            document.getElementById('cinematicWinnerScreen').classList.add('hide-card');
+            document.body.style.overflow = 'auto'; 
+        }
+
+        function perbaruiDataGrafik() {
+            if (objekGrafik) {
+                objekGrafik.data.datasets[0].data = [
+                    parseInt(localStorage.getItem('skor_Logo1')),
+                    parseInt(localStorage.getItem('skor_Logo2')),
+                    parseInt(localStorage.getItem('skor_Logo3'))
+                ];
+                objekGrafik.update(); 
+            }
+        }
+
+        function tampilkanGrafikKeCanvas() {
+            const ctx = document.getElementById('voteChart').getContext('2d');
+            if (objekGrafik) objekGrafik.destroy(); 
+            
+            objekGrafik = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Emoy', 'Gajah', 'Logo 2n'],
+                    datasets: [{
+                        label: 'Suara',
+                        data: [
+                            parseInt(localStorage.getItem('skor_Logo1')),
+                            parseInt(localStorage.getItem('skor_Logo2')),
+                            parseInt(localStorage.getItem('skor_Logo3'))
+                        ],
+                        backgroundColor: ['rgba(0, 242, 254, 0.6)', 'rgba(168, 85, 247, 0.6)', 'rgba(236, 72, 153, 0.6)'],
+                        borderColor: ['#00f2fe', '#a855f7', '#ec4899'], borderWidth: 2, borderRadius: 8
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { color: '#94a3b8', stepSize: 1 } }, x: { ticks: { color: '#94a3b8' } } } }
+            });
+        }
+    </script>
+</body> 
+</html>
