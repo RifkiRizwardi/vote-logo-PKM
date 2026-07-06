@@ -225,8 +225,8 @@
 
     <div id="cinematicWinnerScreen" class="fullscreen-winner-overlay hide-card"></div>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
   const firebaseConfig = {
     apiKey: "AIzaSyCHovbZ6ufSy9t3tS4mk4stUi-QUKd1wBM",
     authDomain: "vote-logo-pkm.firebaseapp.com",
